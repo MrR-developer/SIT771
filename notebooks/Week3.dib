@@ -1,0 +1,426 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+# Week 3 - Control Flow, Error Detection, and Error Handling
+_NOTE: In Polyglot Notebooks you execute code inside individual cells rather than inside a Main function, so the following have not been included:_
+* `class Program` 
+* `public static void Main(string[] args)`
+
+*Note: To create a new Code or Markdown cell you just need click on the `+ Code` or `+ Markdown` button at the top of the window, or hover your mouse over the bottom of the cell and click on the buttons that appear there.*
+
+#!markdown
+
+Page 6
+
+#!csharp
+
+int x = 1;
+int y = 2;
+int z = 14;
+
+int result = sum_three_ints(x, y, z);
+print(result);
+Console.WriteLine("Task completed...");
+
+private static int sum_three_ints(int a, int b, int c) {
+    int a_b = sum_two_ints(a, b);
+    int a_b_c = sum_two_ints(a_b, c);
+
+    return a_b_c;
+}
+
+private static int sum_two_ints(int val1, int val2) {
+    return val1 + val2;
+}
+
+private static void print(int val) {
+    Console.WriteLine($"Result = {val}");
+}
+
+// Before running this code, read it and try to understand what it does.
+// Then run it and see the output.
+// Were you correct?
+
+#!markdown
+
+_NOTE: Unfortunately polyglot notebooks doesn't allow `Console.ReadLine()`; however, there is an alternative method for getting user input using the following:_
+
+`using Microsoft.DotNet.Interactive`
+
+`var input = await Kernel.GetInputAsync("Pick a number.");`
+
+Page 7
+
+#!csharp
+
+using Microsoft.DotNet.Interactive;
+
+// What does the var keyword do in the following code? Is it necessary? Is it best practice?
+var inputText = await Kernel.GetInputAsync("Please enter your height in CM: ");
+var heightInCM = System.Convert.ToInt32(inputText);
+
+if (heightInCM < 0) {
+    Console.WriteLine("Wrong height! Try again later.");
+} 
+else {
+    var heightInMeter = heightInCM / 100.0;
+    Console.WriteLine("Your height in meters is: " + heightInMeter);
+    inputText = await Kernel.GetInputAsync("Please enter your weight in KG: ");
+    var weightInKG = System.Convert.ToDouble(inputText);
+    Console.WriteLine("Your weight in KG is: " + weightInKG);
+
+    var bmi = weightInKG / System.Math.Pow(heightInMeter, 2);
+    bmi = System.Math.Round(bmi, 2);
+    Console.WriteLine("Your BMI is: " + bmi);
+}
+
+// After running this cell you will be asked to enter your height in cm and weight in kg at the prompt at the top of the window.
+// You will then see your BMI calculated and displayed below.
+
+#!markdown
+
+Page 8
+
+#!csharp
+
+using Microsoft.DotNet.Interactive; // Require to get input from user without Console.ReadLine()
+
+int kgfish1;
+int kgfish2;
+bool forever = true;
+do
+{
+    Console.WriteLine("1. Fishtype1");
+    Console.WriteLine("2. Fishtype2");
+    Console.WriteLine("3. Quit");
+    int reply = Convert.ToInt32(await Kernel.GetInputAsync());
+    switch (reply)
+    {
+        case 1:
+        {
+            Console.WriteLine("How many kg of fishtype1 do you want?");
+            kgfish1 = Convert.ToInt32(await Kernel.GetInputAsync());
+            break;
+        }
+        case 2:
+        {
+            Console.WriteLine("How many kg of fishtype2 do you want?");
+            kgfish2 = Convert.ToInt32(await Kernel.GetInputAsync());
+            break;
+        }
+        case 3:
+        {
+            Console.WriteLine("You've decided to quit.");
+            forever = false;
+            break;
+        }
+        default:
+        {
+            Console.WriteLine("Please insert either 1, 2 or 3.");
+            break;
+        }
+    }
+} while (forever);
+
+// When you run the code in this cell you will be prompted to enter a number. You can enter it in the top of this window.
+// You will see the options to choose from below the cell. You can choose the options by entering the number in the prompt.
+// Any information printed to the console will appear in the output below the cell.
+
+#!markdown
+
+Page 9
+
+#!csharp
+
+// A basic example of a while loop in C#
+// as the code on page 9 doesn't do anything.
+
+int i = 0;
+
+while (i < 5) {
+    Console.WriteLine(i);
+    i++;
+}
+
+// Loops are extremely useful in programming. They allow you to repeat a block of code multiple times.
+
+#!csharp
+
+// A basic example of a do-while loop in C#
+// as the code on page 9 doesn't do anything.
+
+int j = 0;
+
+do {
+    Console.WriteLine(j);
+    j++;
+} while (j < 5);
+
+// The do-while loop is similar to the while loop, with one key difference. Do you know what it is?
+
+#!csharp
+
+// A basic example of a for loop in C#
+// as the code on page 9 doesn't do anything.
+
+for (int k = 0; k < 5; k++) {
+    Console.WriteLine(k);
+}
+
+// The for loop is another way to repeat a block of code multiple times. When might this be preferable to a while loop?
+
+#!csharp
+
+// A basic example of a foreach loop in C#
+// as the code on page 9 doesn't do anything.
+
+int[] numbers = { 1, 2, 3, 4, 5 };
+
+foreach (int num in numbers) {
+    Console.WriteLine(num);
+}
+
+// The foreach loop is used to iterate over elements of an array or collection. It simplifies the code for iterating over elements.
+// Not all programming languages have a foreach loop, but C# does.
+
+#!markdown
+
+Page 13
+
+#!csharp
+
+// Personally I wouldn't run this.  Yes, you will get a StackOverflowException
+// eventually but it's not a good idea to run code that will crash your program.
+// Instead, try to understand what the code is doing and why it will crash and
+// then fix it before running it.
+
+// If you get an infinite loop and you can't stop it by clicking the stop button
+// you can press the Restart button to restart the kernel and that will stop the loop.
+
+public static void run_rec()
+{
+    recursive(0);
+}
+
+private static void recursive(int value)
+{
+    Console.WriteLine(value);
+    value = value + 1;
+    recursive(value);
+
+}
+
+// Only uncomment and run the next line after you have read the warning above.
+// run_rec();
+
+#!markdown
+
+Page 15
+
+#!csharp
+
+public static void run_print()
+{
+    string value = null;
+
+    if (value.Length == 0)
+    {
+        Console.WriteLine(value);
+    }
+}
+
+// Calling this method will throw a NullReferenceException.
+// Do you know why?  Try to fix it using ?? or ?. or simply using an if statement.
+// If you don't know what ?? and ? mean then look them up on at https://learn.microsoft.com/en-us/dotnet/csharp/
+// They are called the null-coalescing operator and the null-conditional operator.
+run_print();
+
+#!markdown
+
+Page 17
+
+#!csharp
+
+public static void run_array()
+{
+    int[] array = new int[100];
+    array[0] = 1;
+    array[10] = 2;
+    array[200] = 3;
+}
+
+// Calling this method will throw an IndexOutOfRangeException.
+// Do you know why?
+run_array();
+
+#!markdown
+
+Page 19
+
+#!csharp
+
+public static void run_str()
+{
+    string value = new string('a', int.MaxValue);
+}
+
+// Calling this method will throw an OutOfMemoryException.
+// Do you know why?  Try to fix it before running it.
+
+// I have commented out the next line because I haven't run 
+// this on my computer and I don't recommend running it.
+// run_str();
+
+#!markdown
+
+Page 21
+
+#!csharp
+
+public static void run_int()
+{
+    checked
+    {
+        int value = int.MaxValue + int.Parse("1");
+    }
+}
+
+// Calling this method will throw an OverflowException.
+// Do you know why?
+run_int();
+
+#!csharp
+
+// This is an extra example to help explain the OverflowException.
+
+public static void run_int()
+{
+    byte value = byte.MaxValue;
+    Console.WriteLine(value);
+    value += byte.Parse("1");
+    Console.WriteLine(value);
+}
+
+// Calling this method will not throw an OverflowException.
+// but it will wrap around to 0.  Do you know why?
+// What if you choose a data type other than a byte?
+// Have a play with the code and see what you can find out.
+run_int();
+
+#!markdown
+
+Page 23
+
+#!csharp
+
+public static void run_char()
+{
+    string id = "1233456789";
+    bool active = false;
+    char active_char = Convert.ToChar(active);
+}
+
+// Calling this method will throw an InvalidCastException.
+// Do you know why?
+run_char();
+
+#!markdown
+
+Page 27
+
+#!csharp
+
+using Microsoft.DotNet.Interactive; // Require to get input from user without Console.ReadLine()
+
+// As we are using the async version of GetInputAsync we need to make the method async.
+public static async Task run_parse()
+{
+    Console.WriteLine("Enter a number: ");
+    int value = 0;
+    if (int.TryParse(await Kernel.GetInputAsync(), out value) == true)
+        Console.WriteLine("Well done!");
+    else
+        Console.WriteLine("That was not a number!");
+}
+
+// Call run_parse() to test the code. We need to use await because the method is async.
+// This is only required in Polyglot Notebooks.  In a normal C# program you wouldn't need await
+// because you would be calling the method from a Main method which is synchronous.
+await run_parse();
+
+#!markdown
+
+Page 29
+
+#!csharp
+
+using Microsoft.DotNet.Interactive; // Require to get input from user without Console.ReadLine()
+
+public static async Task run_exp()
+{
+    Console.WriteLine("Enter a number: ");
+    int value = 0;
+    try
+    {
+        value = int.Parse(await Kernel.GetInputAsync());
+        Console.WriteLine("Well done!");
+    }
+    catch (FormatException)
+    {
+        Console.WriteLine("That was not a number!");
+    }
+    catch
+    {
+        Console.WriteLine("Some unknown error occurred.");
+    }
+    finally
+    {
+        Console.WriteLine("Program finished.");
+    }
+}
+
+// Call run_exp() to test the code. We need to use await because the method is async.
+// This is only required in Polyglot Notebooks.  In a normal C# program you wouldn't need await
+// because you would be calling the method from a Main method which is synchronous.
+
+// Can you get the first catch block to catch the exception?  What about the second catch block?
+// Can you think of a situation where the second catch block would catch the exception?
+await run_exp();
+
+#!markdown
+
+Page 32
+
+#!csharp
+
+public static void run_exp_2()
+{
+    try
+    {
+        int[] x = new int[] { 1, 2, 3 };
+        int y = run_exp_3(x, 4);
+    }
+    catch (IndexOutOfRangeException ex)
+    {
+        Console.WriteLine("Full handling of exception: " + ex.Message);
+    }
+}
+
+private static int run_exp_3(int[] array, int index)
+{
+    try
+    {
+        return array[index];
+    }
+    catch (IndexOutOfRangeException ex)
+    {
+        Console.WriteLine("Partial handling of exception.");
+        throw;
+    }
+}
+
+// Call run_exp_2() to test the code. What does it do? How is it different from run_exp()?
+run_exp_2();

@@ -1,0 +1,214 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+# Week 1 - Introduction to Object-Oriented Programming
+Use this Polyglot Notebook to try out the examples from week 1.  You can do this either own your own, or during class. 
+
+Add in any extra notes using markdown cells to help you remember the theory.
+
+Then try out what you have learnt by running C# code in the code cells.  This will allow you to ask your lecturer or tutor if something doesn't work as you expect.
+
+#!markdown
+
+Page 22
+
+#!csharp
+
+public class MyClass
+{
+    private string property_1;
+    public int property_2;
+
+    public string GetAddress()
+    {
+        string address = "my address";
+        return address;
+    }
+}
+
+// After running this cell, you can create an instance of the class and access its properties and methods
+// Create a new code cell below and give it a go.  You can create a new cell by clicking the '+ Code' button in the toolbar
+// or by hovering your mouse over the bottom of the cell and clicking the '+ Code' button that appears.
+
+#!markdown
+
+Page 23
+
+#!csharp
+
+public class MyClass
+{
+    private string property_1;
+    public int property_2;
+
+    public MyClass()
+    {
+        property_1 = "p1";
+    }
+
+    public string GetAddress()
+    {
+        string address = "my address";
+        return address;
+    }
+}
+
+// Running this cell will overwrite the previous definition of MyClass
+// Create an instance of the class and access its properties and methods in a new code cell below
+// Which properties can you access? Why is that the case?
+
+#!markdown
+
+Page 24
+
+#!csharp
+
+public class MyClass
+{
+    private string property_1;
+    public int property_2;
+
+    public MyClass(string p1)
+    {
+        property_1 = p1;
+    }
+
+    public string GetAddress()
+    {
+        string address = "my address";
+        return address;
+    }
+}
+
+public class User
+{
+    private void method_1()
+    {
+        // MyClass myInstance_1 = new MyClass(); // Why does this line not work?
+        MyClass myInstance_2;
+        myInstance_2 = new MyClass("p1 value");
+    }
+}
+
+// Running this cell will define a new class called User that uses the MyClass class defined above
+// Try creating an instance of the User class and calling the method_1 method in a new code cell below. Is it possible? Why or why not?
+// Try creating an instance of the MyClass class and calling the GetAddress method in a new code cell below. Is it possible? Why or why not?
+// What is different about the methods in the MyClass class and the User class that affects how they can be accessed?
+
+#!markdown
+
+Page 25
+
+#!csharp
+
+public class MyClass
+{
+    private string property_1;
+    public int property_2;
+
+    public MyClass(string p1)
+    {
+        property_1 = p1;
+    }
+
+    public string GetAddress()
+    {
+        string address = "my address";
+        return address;
+    }
+
+    public void ReadAddress()
+    {
+        string address = GetAddress();
+    }
+}
+
+public class User
+{
+    private void method_1()
+    {
+        // MyClass myInstance_1 = new MyClass();
+        MyClass myInstance_2;
+        myInstance_2 = new MyClass("p1 value");
+        myInstance_2.GetAddress();
+    }
+}
+
+// Running this cell will define a new class called User that uses the MyClass class defined above.
+// It will also add a new method to the MyClass class that reads the address.
+// Try creating an instance of the User class and calling the method_1 method in a new code cell below. Is it possible? Why or why not?
+// Does it work the way you expect? Why or why not? Can you fix it to work the way you expect?
+
+#!markdown
+
+Page 26
+
+#!csharp
+
+int student_id = 123;
+MyClass myInstance_2;
+myInstance_2 = new MyClass("p1 value");
+
+// Now you have created some objects, try accessing their properties and methods in a new cell below.
+// Make sure that you have run the cells above to define the classes before trying to access their properties and methods.
+
+#!markdown
+
+Page 27
+
+#!csharp
+
+public class MyClass_2
+{
+    private static string property_1;
+    public int property_2;
+
+    public static void Method_st()
+    {
+        GetAddress();
+    }
+    public string GetAddress()
+    {
+        string address = "my address";
+        return address;
+    }
+
+    public void ReadAddress()
+    {
+        string address = GetAddress();
+    }
+}
+
+public class User_2
+{
+    private void method_1()
+    {
+        MyClass_2.Method_st();
+        MyClass_2 myInstance_2 = new MyClass_2();
+        myInstance_2.Method_st();
+    }
+}
+
+// There are some errors in the code above. Can you identify and fix them?
+// Hint: The errors are related to the use of static methods and properties in the MyClass_2 class.
+// What are the conditions under which you can use static methods and properties in a class?
+// What about non-static methods and properties?
+
+#!csharp
+
+class main
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine("This is a test message...");
+        // Console.ReadKey(); // This won't work in a Polyglot Notebook
+    }
+}
+
+// Run this cell and then try calling the Main method in the cell below.
+// How can you call the Main method in this Polyglot Notebook environment?
+// How is that different from calling the Main method in a console application? 
+// Who is responsible for calling the Main method in each case?

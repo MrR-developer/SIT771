@@ -1,0 +1,181 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+# Week 6 - Responsibilities and Design Considerations
+We are now getting to the stage where we getting working code is getting easier and we can start thinking about how to get good code.  In Object Oriented Programming you want to think about Responsibility Driven Design (RDD).  If you haven't heard about RDD, then you are in the right place.  That is what we are going to learn this week.
+
+We will also consier ways of testing our code to make sure that it works as expected and to discover what happens when it is used unexpectedly.
+
+#!markdown
+
+Page 13
+
+#!csharp
+
+public class Circle_v1
+{
+    public double Radius { get; set; }
+
+    public Circle_v1(double radius)
+    {
+        Radius = radius;
+    }
+}
+
+public class Cylinder_v1
+{
+    public Circle_v1 Top { get; private set ;}
+    public Circle_v1 Bottom { get; private set; }
+    public double Height { get; set; }
+
+    public Cylinder_v1(double radius, double height)
+    {
+        Top = new Circle_v1(radius);
+        Bottom = new Circle_v1(radius);
+        Height = height;
+    }
+
+    public double GetArea()
+    {
+        return Math.PI * Top.Radius * Top.Radius
+            + Math.PI * Bottom.Radius * Bottom.Radius
+            + 2 * Math.PI * Top.Radius * Height;
+    }
+
+    public double GetVolume()
+    {
+        return Math.PI * Top.Radius * Top.Radius * Height;
+    }
+}
+
+// Test class Cylinder_v1
+var cylinder = new Cylinder_v1(3, 5);
+Console.WriteLine($"Area: {cylinder.GetArea()}");
+Console.WriteLine($"Volume: {cylinder.GetVolume()}");
+
+// Look at the difference between the two classes. 
+// What is the Circle class responsible for?  What is the Cylinder class responsible for?  
+// What is the relationship between the two classes?  How does the Cylinder class use the Circle class?  
+// Are the responsibilities of the classes evenly distributed?  Why or why not?
+// How else could you design the classes to distribute the responsibilities more evenly?
+
+#!markdown
+
+Page 14
+
+#!csharp
+
+public class Circle_v2
+{
+    public double Radius { get; set; }
+
+    public Circle_v2(double radius)
+    {
+        Radius = radius;
+    }
+
+    public double GetArea()
+    {
+        return Math.PI * Radius * Radius;
+    }
+
+    public double GetPerimeter()
+    {
+        return 2 * Math.PI * Radius;
+    }
+}
+
+public class Cylinder_v2
+{
+    public Circle_v2 Top { get; private set ;}
+    public Circle_v2 Bottom { get; private set; }
+    public double Height { get; set; }
+
+    public Cylinder_v2(double radius, double height)
+    {
+        Top = new Circle_v2(radius);
+        Bottom = new Circle_v2(radius);
+        Height = height;
+    }
+
+    public double GetArea()
+    {
+        return 2 * Top.GetArea() 
+            + Top.GetPerimeter() * Height;
+    }
+
+    public double GetVolume()
+    {
+        return Top.GetArea() * Height;
+    }
+}
+
+// Test class Cylinder_v2
+var cylinder = new Cylinder_v2(3, 5);
+Console.WriteLine($"Area: {cylinder.GetArea()}");
+Console.WriteLine($"Volume: {cylinder.GetVolume()}");
+
+// How does the design of the classes in the second example distribute the responsibilities more evenly?
+// What are the benefits of this design?  Are there any drawbacks?
+// Which design do you prefer?  Why?
+// Which is more maintainable?  Why?
+
+#!markdown
+
+Page 18
+
+#!csharp
+
+public class Circle_v1
+{
+    public double Radius { get; set; }
+
+    public Circle_v1(double radius)
+    {
+        Radius = radius;
+    }
+}
+
+public class Cylinder_v1
+{
+    public Circle_v1 Top { get; private set ;}
+    public Circle_v1 Bottom { get; private set; }
+    public double Height { get; set; }
+
+    public Cylinder_v1(double radius, double height)
+    {
+        Top = new Circle_v1(radius);
+        Bottom = new Circle_v1(radius);
+        Height = height;
+    }
+
+    public double GetArea()
+    {
+        return Math.PI * Top.Radius * Top.Radius
+            + Math.PI * Bottom.Radius * Bottom.Radius
+            + 2 * Math.PI * Top.Radius * Height;
+    }
+
+    public double GetVolume()
+    {
+        return Math.PI * Top.Radius * Top.Radius * Height;
+    }
+}
+
+public class UserClass2
+{
+    public static void UseShapes()
+    {
+        var cylinder_v1 = new Cylinder_v1(10, 50);
+        Console.WriteLine($"The cylinder's area is {cylinder_v1.GetArea()} and its volume is {cylinder_v1.GetVolume()}.");
+    }
+}
+
+// Test class UserClass2
+UserClass2.UseShapes();
+
+// We can use the UserClass2 class to perform integration testing on the Cylinder_v1 class.
+// What is the point of integration testing? What other types of testing are there?

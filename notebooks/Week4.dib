@@ -1,0 +1,165 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+# Week 4 - Modelling and Object/Class Relationships
+You should be starting to be more comfortable with creating objects and classes.  This week we will loop at the relationships between them.  You can also start to get creative by adding your own properties and methods. Also think about how the classes relate to each other.
+
+#!markdown
+
+Page 11
+
+#!csharp
+
+public class Doctor
+{
+    private Patient[] _patients;
+    // .. other members of the Doctor class
+}
+
+public class Patient
+{
+    private int _id;
+    private string _name;
+    private int age;
+    // .. other members of the Patient class
+}
+
+// Create a new instance of the Doctor class in another cell. What can you do with it?
+// At the moment it's a bit boring.  Try adding in other members and maybe some methods.
+// It's up to you to decide whether to make the members public or private. If you make them private, you'll need to add some methods to access them.
+
+// Create a new instance of the Patient class in another cell. What can you do with it?
+// Try adding a way for the patient to be assigned to a doctor.  Where would you put this code?  In the Doctor class or the Patient class?  Why?
+// What other members could you add to the Patient class?  What about methods?  What would they do?
+
+#!markdown
+
+Page 13
+
+#!csharp
+
+public class MathModels
+{
+    public double CalcMean(double[] values)
+    {
+        double _mean = 0;
+        // calculate mean .. and put it into _mean
+        return _mean;
+    }
+
+    public double CalcMax(double[] values)
+    {
+        double _max = 0;
+        // find max value .. and put it into _max
+        return _max;
+    }
+}
+
+public class Engineering
+{
+    public static void DoTheMaths()
+    {
+        double[] values = new double[10];
+        MathModels math = new MathModels();
+        double _max = math.CalcMax(values);
+    }
+}
+
+// Create a new instance of the Engineering class in another cell. What can you do with it?
+// You will need to add some code to the CalcMean and CalcMax methods to make them work.  What code would you add?
+// How would you assign values to the values array?  Would you do this in the DoTheMaths method or somewhere else?  Why?
+
+#!markdown
+
+Page 14
+
+#!csharp
+
+public class TestArgs
+{
+    public static void caller()
+    {
+        int x = 10;
+        called_1(out x);
+        called_2(ref x);
+        called_3(in x);
+    }
+
+    private static void called_1(out int returnOnlyVar)
+    {
+        // Console.WriteLine(returnOnlyVar); // Error: Use of unassigned
+        // parameter 'returnOnlyVar'
+        returnOnlyVar = 200;
+    }
+
+    private static void called_2(ref int bidirectionalVar)
+    {
+        Console.WriteLine(bidirectionalVar);
+        bidirectionalVar = 200;
+        Console.WriteLine(bidirectionalVar);
+    }
+
+    private static void called_3(in int passOnlyVar)
+    {
+        Console.WriteLine(passOnlyVar);
+        // passOnlyVar = 200; // Error: Cannot assign to variable 'in int'
+        // because it is a readonly variable
+    }
+}
+
+TestArgs.caller();
+
+// What is the difference between the out, ref, and in keywords in C#? When would you use each one?
+// What happens if you try to assign a value to a variable that is passed using the in keyword?
+
+#!markdown
+
+Page 15
+
+#!csharp
+
+class Course {}
+class Student {}
+
+// The association class bringing together students and courses
+class Enrollment
+{
+    private Student _student;
+    private Course _course;
+    
+    public Enrollment(Student student, Course course)
+    {
+        this._student = student;
+        this._course = course;
+    }
+}
+
+// Create a new instance of the Enrollment class in another cell. What can you do with it?
+// Can you access the student and course members directly?  Should you be able to?  Why or why not?
+// What other members could you add to the Enrollment class?  What about methods?  What would they do?
+
+#!markdown
+
+Page 19
+
+#!csharp
+
+public class Room {}
+
+public class House
+{
+    private Room _room;
+
+    public House()
+    {
+        _room = new Room();
+    }
+}
+
+// Create a new instance of the House class in another cell. What can you do with it?
+// Can you access the room member directly?  Should you be able to?  Why or why not?
+// Room doesn't seem to do much at the moment.  What could you add to it to make it more useful?
+// How wolud you access the room from the House class?  What code would you write?

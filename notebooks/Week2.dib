@@ -1,0 +1,297 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+# Week 2 - Objects and Classes
+This week we will have a closer look at creating classes and objects.  
+
+If you are running two cells that depend on each other (e.g., a class or variable is defined in one cell and code to instantiate it is in another) make sure you run the cells in the correct order.
+
+#!markdown
+
+Page 12
+
+#!csharp
+
+public class MyClass
+{
+    private string field_1;
+    public int field_2;
+
+    public MyClass(string p1)
+    {
+        field_1 = p1;
+        field_2 = 0;
+    }
+
+    private string getAddress()
+    {
+        string address = "my address";
+        return address;
+    }
+
+    public void ReadAddress()
+    {
+        string address = getAddress();
+    }
+}
+
+public class User
+{
+    private void method_1()
+    {
+        int student_id = 123;
+        MyClass myInstance_2;
+        myInstance_2 = new MyClass("pi value");
+    }
+}
+
+// Create an instance of MyClass in a new cell and call the ReadAddress method.
+// Is it possible to call the getAddress method from the next cell?  Why or why not?
+
+// Create an instance of User in a new cell cell.
+// Is it possible to call the method_1 method?  Why or why not?
+
+#!markdown
+
+Page 14
+
+#!csharp
+
+public class MyClass
+{
+    private string field_1;
+    public int field_2;
+
+    public MyClass(string p1)
+    {
+        field_1 = p1;
+        field_2 = 0;
+    }
+}
+
+// Create an instance of MyClass in a new cell.
+// Is it possible to access the field_1 and field_2 fields from the new cell?  Why or why not?
+
+#!markdown
+
+Page 15
+
+#!csharp
+
+public class Engine
+{
+    private string model;
+    private int power;
+
+    public void Repair()
+    {
+        repairFanBlade();
+        repairCombustor();
+        repairTurbine();
+    }
+
+    private void repairFanBlade()
+    {}
+
+    private void repairCombustor()
+    {}
+
+    private void repairTurbine()
+    {}
+}
+
+// Create an instance of Engine in a newcell.
+// Is it possible to call the repairFanBlade, repairCombustor, and repairTurbine methods from the new cell?  Why or why not?
+// Why might you want to make these methods private?
+
+#!markdown
+
+Page 17
+
+#!csharp
+
+public class circle
+{
+    public double Radius;
+    private double area;
+
+    public double Area
+    {
+        get
+        {
+            return Math.PI * Radius * Radius;
+        }
+    }
+}
+
+// Create an instance of circle in a new cell.
+// Is it possible to access the Radius and Area fields from the new cell?  Why or why not?
+// What is the difference between the area field and the Area property?
+
+#!markdown
+
+Page 18 (*NOTE: The code on this page seems to have been written with an old version of C# that doesn't work.)
+
+#!csharp
+
+// public class Shape
+// {
+//     public System.Drawing.Color Color { get; set; }
+//     public int X { get; set; }
+//     public int Y { get; set; }
+//     public int Width { get; set; }
+//     public int Height { get; set; }
+
+//     public void Draw(System.Drawing.Graphics graphics)
+//     {
+//         System.Drawing.SolidBrush brush = new System.Drawing.SolidBrush(Color);
+//         graphics.FillRectangle(brush, new System.Drawing.Rectangle(X, Y, Width, Height));
+//         brush.Dispose();
+//         graphics.Dispose();
+
+//         // SplashKitFillRectangle(Color, X, Y, Width, Height);
+//     }
+// }
+
+#!markdown
+
+Page 19
+
+#!csharp
+
+public class Student
+{
+    private string address;
+
+    public string GetAddress()
+    {
+        return address.ToUpper();
+    }
+
+    public void SetAddress(string currentAddress)
+    {
+        address = currentAddress;
+    }
+}
+
+// Create an instance of Student in a new cell.
+// Is it possible to access the address field from the nenewxt cell?  Why or why not?
+// Is it possible to access the GetAddress and SetAddress methods from the new cell?  What is the purpose of these methods?
+
+#!markdown
+
+Page 20
+
+#!csharp
+
+public class rectangle
+{
+    private double width;
+    private double length;
+
+    public double Width{
+        get { return width; }
+        set { width = value; }
+    }
+
+    public double Length{
+        get { return length; }
+        set { length = value; }
+    }
+}
+// Create an instance of rectangle in a new cell.
+// What do the get and set methods do? How do they differ from the way fields are accessed in other classes?
+// How do you think the get and set methods might be useful? Do you know how to use them?
+
+#!markdown
+
+Page 23
+
+#!csharp
+
+public class BankAccount_bad
+{
+    public double lastBalance;
+    public double balance;
+
+    public void SetBalance(double newBalance)
+    {
+        if (newBalance >= 0)
+            balance = newBalance;
+    }
+}
+
+// Create an instance of BankAccount_bad in a new cell.
+// Is it possible to access the lastBalance and balance fields from the new cell?  Why or why not?
+// Can you change the value of the balance field from the new cell?  Why or why not? Is this a good design? Can you make the balance negative?
+// What happens when you call the SetBalance method with a negative value?
+
+#!csharp
+
+public class BankAccount_better
+{
+    private double lastBalance;
+    private double balance;
+
+    public void SetBalance(double newBalance)
+    {
+        if (newBalance >= 0)
+            balance = newBalance;
+    }
+}
+
+// Create an instance of BankAccount_better in a new cell.
+// Is it possible to access the lastBalance and balance fields from the new cell?  Why or why not?
+// Can you change the value of the balance field from the new cell?  Why or why not? Is this a good design?
+// How does this design differ from the BankAccount_bad class?
+
+#!markdown
+
+Page 28
+
+#!csharp
+
+public class CartItem
+{
+    private float _price;
+    private int _quantity;
+
+    public float Price { get { return _price; } set { _price = value; } }
+    public int Quantity { get { return _quantity; } set { _quantity = value; } }
+}
+
+// Create an instance of CartItem in a new cell.
+// This code looks differet from the code on Page 20, but is it really?  What is the difference between the two?
+// What is the purpose of the underscore in front of the field names?
+
+#!csharp
+
+public class Cart
+{
+    public CartItem[] items { get; set; }
+}
+
+public class Order
+{
+    private Cart cart;
+    private float salesTax;
+
+    public float OrderTotal()
+    {
+        float cartTotal = 0;
+        for (int i = 0; i < cart.items.Length; i++)
+        {
+            cartTotal += cart.items[i].Price * cart.items[i].Quantity;
+        }
+        cartTotal += cartTotal * salesTax;
+        return cartTotal;
+    }
+ }
+
+//  Create an instance of Order in a new cell.
+//  Is it possible to access the cart and salesTax fields from the new cell?  Why or why not?
+//  Is it possible to access the OrderTotal method from the new cell?  Why or why not?
+// What is the purpose of the OrderTotal method?

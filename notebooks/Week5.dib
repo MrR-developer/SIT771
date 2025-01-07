@@ -1,0 +1,392 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+# Week 5 - Useful Data Structures and Code Evaluation
+This week we introduce a number of different data structures and how to use them.  These data structures are not unique to C# and appear in other programming languages.  In C# these structures are all impletemented as Classes. Consequently, they have their own properties and methods.  It is worth looking up these structures on https://learn.microsoft.com/en-us/dotnet/csharp/ to see what other things they can do.  You can also just write the class name followed by a full-stop to see what methods you can call (e.g., Array.).
+
+#!markdown
+
+Page 6
+
+#!csharp
+
+public class EmployeeInfo
+{
+    private string name_employee_1 = "Jane";
+    private string name_employee_2 = "Jack";
+    private string name_employee_3 = "Max";
+    private string name_employee_4 = "Cloe";
+    private string name_employee_5 = "Sarah";
+
+    public void PrintNames()
+    {
+        Console.WriteLine("1st employee's name is " + name_employee_1);
+        Console.WriteLine("2nd employee's name is " + name_employee_2);
+        Console.WriteLine("3rd employee's name is " + name_employee_3);
+        Console.WriteLine("4th employee's name is " + name_employee_4);
+        Console.WriteLine("5th employee's name is " + name_employee_5);
+    }
+
+    public void ChangeNames()
+    {
+        name_employee_1 = name_employee_1.ToLower();
+        name_employee_2 = name_employee_2.ToLower();
+        name_employee_3 = name_employee_3.ToLower();
+        name_employee_4 = name_employee_4.ToLower();
+        name_employee_5 = name_employee_5.ToLower();
+    }
+}
+
+// This is code to test the EmployeeInfo class
+EmployeeInfo employeeInfo = new EmployeeInfo();
+employeeInfo.PrintNames();
+
+Console.WriteLine("\nChange names to lowercase:");
+employeeInfo.ChangeNames();
+employeeInfo.PrintNames();
+
+// Yes, this code works, but is it the best way to store and access employee names?  
+// What if we have 100 employees?
+
+#!markdown
+
+Page 9
+
+#!csharp
+
+public static void ProcessArrays()
+{
+    int[] data;
+    // declares a variable that refers to an array
+
+    data = new int[5];
+    // creates a new array with 5 elements and stores it in data
+
+    data[0] = 40;
+    // assigns number 40 to the first element of array data
+
+    data[4] = 81;
+    // assigns number 81 to the fifth (last) element of array data
+
+    Console.WriteLine("First element: " + data[0]);
+    Console.WriteLine("Last element: " + data[4]);
+}
+
+// This is code to test the ProcessArrays method
+ProcessArrays();
+
+// This code works, but it is not very flexible.
+// What if we want to change the size of the array?
+// What if we want to store different types of data in the array?
+// Can you think of a better way to store and access employee names and other data?
+
+#!markdown
+
+Page 10
+
+#!csharp
+
+using Microsoft.DotNet.Interactive;
+
+public static async Task ProcessArrays_v2()
+{
+    int size;
+    int[] data;
+
+    size = Convert.ToInt32(await Kernel.GetInputAsync("Enter the size of the array: "));
+    data = new int[size];
+    Console.WriteLine("Array size set to " + size);
+
+    int i = 0;
+    while (i < size)
+    {
+        data[i] = Convert.ToInt32(await Kernel.GetInputAsync($"Enter element to store in data[{i}]: "));
+        i++;
+    }
+    Console.WriteLine("Array is now all set.");
+    Console.WriteLine("Here is what you have in the array...");
+
+    i = 0;
+    while (i < size)
+    {
+        Console.WriteLine($"data[{i}] = {data[i]}");
+        i++;
+    }
+}
+
+// This is code to test the ProcessArrays_v2 method
+await ProcessArrays_v2();
+
+// This code is more flexible than the previous version.
+// It allows the user to specify the size of the array and the data to store in it.
+// However, it still only works with integers.
+// Can you think of a way to make it work with any type of data?
+
+#!markdown
+
+Page 11
+
+#!csharp
+
+using Microsoft.DotNet.Interactive;
+
+public static async Task ProcessArrays_v3()
+{
+    int size;
+    int[] data;
+
+    size = Convert.ToInt32(await Kernel.GetInputAsync("Enter the size of the array: "));
+    data = new int[size];
+    Console.WriteLine("Array size set to " + size);
+
+    for (int i = 0; i < size; i++)
+    {
+        data[i] = Convert.ToInt32(await Kernel.GetInputAsync($"Enter element to store in data[{i}]: "));
+    }
+    Console.WriteLine("Array is now all set.");
+    Console.WriteLine("Here is what you have in the array...");
+
+    for (int i = 0; i < size; i++)
+    {
+        Console.WriteLine($"data[{i}] = {data[i]}");
+    }
+}
+
+// This is code to test the ProcessArrays_v3 method
+await ProcessArrays_v3();
+
+// This code is similar to the previous version, but it uses a for loop instead of a while loop.
+// It is more concise and easier to read.
+// However, it still only works with integers.
+// Can you think of a way to make it work with any type of data?
+
+#!markdown
+
+Page 12
+
+#!csharp
+
+using Microsoft.DotNet.Interactive;
+
+public static async Task SumArray()
+{
+    int size;
+    int[] data;
+
+    size = Convert.ToInt32(await Kernel.GetInputAsync("Enter the size of the array: "));
+    data = new int[size];
+    Console.WriteLine("Array size set to " + size);
+
+    for (int i = 0; i < size; i++)
+    {
+        data[i] = Convert.ToInt32(await Kernel.GetInputAsync($"Enter element to store in data[{i}]: "));
+    }
+    Console.WriteLine("Array is now all set.");
+
+    int sum = 0;
+    for (int i = 0; i < size; i++)
+    {
+        sum += data[i];
+    }
+    Console.WriteLine("The SUM of the elements in the array = " + sum);
+}
+
+// This is code to test the SumArray method
+await SumArray();
+
+// Can you tell what this code does before running it?
+// Step through the code and see if you can understand how it works then run it to see if you were correct.
+
+#!markdown
+
+Page 13
+
+#!csharp
+
+public static void LinearSearchArray()
+{
+    string[] employeeNames = { "Alice", "Jack", "Henry", "Cloe", "Jane" };
+    for (int i = 0; i < employeeNames.Length; i++)
+    {
+        if (employeeNames[i].ToLower() == "cloe")
+        {
+            Console.WriteLine($"Employee found at 0-based index {i}.");
+        }
+    }
+}
+
+// This is code to test the LinearSearchArray method
+LinearSearchArray();
+
+// Try to understand how this code works before running it.
+// How might you modify it to search for a different employee name?
+// Could you get the user to input the name to search for?  How would you do this in a notebook? How would you do this in a console application?
+
+#!markdown
+
+Page 15
+
+#!csharp
+
+public class EmplyeeInfo_v2
+{
+    private static string[] _names = { "Jane", "Jack", "Max", "Cloe", "Sarah" };
+
+    public static void PrintNames()
+    {
+        for (int i = 0; i < _names.Length; i++)
+        {
+            Console.WriteLine("Employee " + i + "'s name is " + _names[i]);
+        }
+    }
+
+    public static void ChangeNames()
+    {
+        for (int i = 0; i < _names.Length; i++)
+        {
+            _names[i] = _names[i].ToLower();
+        }
+    }
+}
+
+// This is code to test the EmplyeeInfo_v2 class
+EmplyeeInfo_v2.PrintNames();
+
+// What does the ChangeNames method do?
+// Try calling the ChangeNames method and then calling the PrintNames method to see the effect.
+// Were you correct in your understanding of what the ChangeNames method does?
+
+#!markdown
+
+Page 18
+
+#!csharp
+
+public static void ListProcessing_v1()
+{
+    List<double> numbers;
+    // declares a list of double values
+
+    numbers = new List<double>();
+    // creates a new empty list of double values
+
+    numbers.Add(100.1);
+    // adds 100.1 to the list
+
+    numbers.Remove(100.1);
+    // removes 100.1 from the list
+
+    numbers.Add(21.03);
+    // adds 21.03 to the list
+
+    numbers.RemoveAt(0);
+    // removes the first number in the list
+
+    numbers.Insert(0, 18.8);
+    // inserts 18.8 into the first position of the list
+
+    Console.WriteLine("This is the first element: " + numbers[0]);
+
+    for (int i = 1; i < 3; i++)
+    {
+        numbers.Add(i * 0.25);
+    }
+
+    foreach (double v in numbers)
+    {
+        Console.Write(v + ", ");
+    }
+}
+
+// This is code to test the ListProcessing_v1 method
+ListProcessing_v1();
+
+// This code works with a list of double values.  How is it different from working with an array of double values?
+// Why might you choose to use a list instead of an array?  What are the advantages and disadvantages of each?
+
+#!markdown
+
+Page 19
+
+#!csharp
+
+public class Student
+{
+    private string _name;
+    public string Name { get {return this._name; } }
+    
+    public Student(string name)
+    {
+        this._name = name;
+    }
+}
+
+public static void DictionaryProcessing()
+{
+    Dictionary<string, Student> students;
+    // declares a variable (students) to refer to the dictionary object
+
+    students = new Dictionary<string, Student>();
+    // creates the dictionary object
+
+    students.Add("id123", new Student("student 1"));
+    // adds a new student object to the dictionary with string id or key of id123
+
+    students["id456"] = new Student("student 2");
+    // adds a new student object to the dictionary with string id or key of id456
+
+    Student student = students["id123"];
+    // fetches the student object with the key of id123
+
+    Console.WriteLine("Selected student's name is " + student.Name);
+}
+
+// This is code to test the DictionaryProcessing method
+DictionaryProcessing();
+
+// What is a dictionary and how is it different from an array or a list?
+// What are the advantages and disadvantages of using a dictionary?
+// Can you think of a real-world example where a dictionary would be useful?
+
+#!markdown
+
+Page 20
+
+#!csharp
+
+public class SomeDictionaries
+{
+    private static Dictionary<string, string> _animalClasses = new Dictionary<string, string>
+    {
+        { "dog", "mammal" },
+        { "frog", "amphibian" },
+        { "snake", "reptile" }
+    };
+
+    private static Dictionary<string, double> _mathFamousNumbers = new Dictionary<string, double>
+    {
+        { "PI", 3.1415 },
+        { "Euler's Number", 2.7182 },
+        { "Golden Ratio", 1.6180 }
+    };
+
+    public static void AccessDictionaryItems()
+    {
+        Console.WriteLine("In mathematics, PI" + " = " + _mathFamousNumbers["PI"]);
+        Console.WriteLine("In mathematics, Golden Ratio" + " = " + _mathFamousNumbers["Golden Ratio"]);
+        Console.WriteLine("In mathematics, Euler's Number" + " = " + _mathFamousNumbers["Euler's Number"]);
+
+        Console.WriteLine("The animal class of a dog is " + _animalClasses["dog"]);
+        Console.WriteLine("The animal class of a snake is " + _animalClasses["snake"]);
+    }
+}
+
+// This is code to test the SomeDictionaries class
+SomeDictionaries.AccessDictionaryItems();
+
+// What does this code do?
+// Can you explain how the dictionary is used in this code?
+// Is the code easy to understand?  Would it have been better or worse if a different data structure was used?

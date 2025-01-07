@@ -1,0 +1,586 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+# Week 7 - Inheritance and Polymorphism
+You might remember from week 1 that we looked at the four main concepts of Object-Oriented Programming.  If you don't remember then just think about "a pie":
+* `A`bstraction
+* `P`olymorphism
+* `I`nheritance
+* `E`ncapsulation
+
+We looked at *Abstraction* and *Encapsulation* in Week 2 and now it's time to learn about *Inheritance* and *Polymorphism*.
+
+#!markdown
+
+Page 5
+
+#!csharp
+
+using System.Drawing;
+
+public class Circle
+{
+    private string _name;
+    private Color _color;
+    private double _radius;
+
+    public string Name
+    {
+        get { return _name; }
+        set { _name = value; }
+    }
+
+    public Color Color
+    {
+        get { return _color; }
+        set { _color = value; }
+    }
+
+    public Circle(string name, Color color, double radius)
+    {
+        this._name = name;
+        this._color = color;
+        this._radius = radius;
+    }
+
+    public double Area()
+    { return Math.PI * Math.Pow(this._radius, 2); }
+
+    public double Perimeter()
+    { return 2 * Math.PI * this._radius; }
+}
+
+public class Square
+{
+    private string _name;
+    private Color _color;
+    private double _side;
+
+    public string Name
+    {
+        get { return _name; }
+        set { _name = value; }
+    }
+
+    public Color Color
+    {
+        get { return _color; }
+        set { _color = value; }
+    }
+
+    public Square(string name, Color color, double side)
+    {
+        this._name = name;
+        this._color = color;
+        this._side = side;
+    }
+
+    public double Area()
+    { return Math.Pow(this._side, 2); }
+
+    public double Perimeter()
+    { return this._side * 4; }
+}
+
+// Create a circle
+Circle circle = new Circle("Circle", Color.Red, 5);
+Console.WriteLine($"Area of {circle.Name}: {circle.Area()}");
+Console.WriteLine($"Perimeter of {circle.Name}: {circle.Perimeter()}");
+Console.WriteLine($"Color of {circle.Name}: {circle.Color}");
+
+Console.WriteLine(); // Add a blank line
+
+// Create a square
+Square square = new Square("Square", Color.Blue, 5);
+Console.WriteLine($"Area of {square.Name}: {square.Area()}");
+Console.WriteLine($"Perimeter of {square.Name}: {square.Perimeter()}");
+Console.WriteLine($"Color of {square.Name}: {square.Color}");
+
+// These two classes are not related, but they have similar properties and methods.
+// Do you know of a method to avoid code duplication in this case?
+// If not, look at the next cell for a solution.
+
+#!markdown
+
+Page 7
+
+#!csharp
+
+public abstract class Shape
+{
+    private string _name;
+    private Color _color;
+
+    public string Name
+    {
+        get { return _name; }
+        set { _name = value; }
+    }
+
+    public Color Color
+    {
+        get { return _color; }
+        set { _color = value; }
+    }
+
+    public Shape(string name, Color color)
+    {
+        this._name = name;
+        this._color = color;
+    }
+
+    public abstract double Area();
+    public abstract double Perimeter();
+}
+
+public class Circle : Shape
+{
+    private double _radius;
+
+    public Circle(string name, Color color, 
+        double radius) : base(name, color)
+    {
+        this._radius = radius;
+    }
+
+    public override double Area()
+    { return Math.PI * Math.Pow(this._radius, 2); }
+
+    public override double Perimeter()
+    { return 2 * Math.PI * this._radius; }
+}
+
+public class Square : Shape
+{
+    private double _side;
+
+    public Square(string name, Color color, 
+        double side) : base(name, color)
+    {
+        this._side = side;
+    }
+
+    public override double Area()
+    { return Math.Pow(this._side, 2); }
+
+    public override double Perimeter()
+    { return this._side * 4; }
+}
+
+// Create a circle
+Circle circle = new Circle("Circle", Color.Red, 5);
+Console.WriteLine($"Area of {circle.Name}: {circle.Area()}");
+Console.WriteLine($"Perimeter of {circle.Name}: {circle.Perimeter()}");
+Console.WriteLine($"Color of {circle.Name}: {circle.Color}");
+
+Console.WriteLine(); // Add a blank line
+
+// Create a square
+Square square = new Square("Square", Color.Blue, 5);
+Console.WriteLine($"Area of {square.Name}: {square.Area()}");
+Console.WriteLine($"Perimeter of {square.Name}: {square.Perimeter()}");
+Console.WriteLine($"Color of {square.Name}: {square.Color}");
+
+// Now the Circle and the Square classes inherit from the Shape class.
+// The Shape class has the common properties and methods of the Circle and the Square classes.
+// What do the abstract and override keywords do in this case?  How are they used? What happens if you remove them?
+
+#!markdown
+
+Page 10
+
+#!csharp
+
+public abstract class Thing
+{
+    public string Name;
+    public int Id;
+}
+
+public class Computer : Thing
+{
+}
+
+public class UsingAbstractClasses
+{
+    public static void Process()
+    {
+        Thing comp = new Computer();
+        comp.Name = "My first computer.";
+        comp.Id = 1;
+
+        // Thing thing = new Thing(); // Error. Cannot create an instance of an abstract class.
+    }
+}
+
+// What does the use of the abstract keyword mean in the Thing class?
+// Why can't you create an instance of an abstract class? What is the purpose of an abstract class?
+// When might you want to use an abstract class in your code?
+
+#!markdown
+
+Page 11
+
+#!csharp
+
+public class Circle : Shape
+{
+    private double _radius;
+
+    public Circle(string name, Color color, 
+        double radius) : base(name, color)
+    {
+        this._radius = radius;
+    }
+
+    public override double Area()
+    { return Math.PI * Math.Pow(this._radius, 2); }
+
+    // This must be implemented because it is an abstract method in the base class.
+    // Uncommenting the following line will stop the error.
+    // public override double Perimeter()
+    // { return 2 * Math.PI * this._radius; }
+}
+
+public abstract class Shape
+{
+    private string _name;
+    private Color _color;
+
+    public string Name
+    {
+        get { return _name; }
+        set { _name = value; }
+    }
+
+    public Color Color
+    {
+        get { return _color; }
+        set { _color = value; }
+    }
+
+    public Shape(string name, Color color)
+    {
+        this._name = name;
+        this._color = color;
+    }
+
+    public abstract double Area();
+
+    public abstract double Perimeter();
+}
+
+// Create a circle
+Circle circle = new Circle("Circle", Color.Red, 5);
+Console.WriteLine($"Area of {circle.Name}: {circle.Area()}");
+Console.WriteLine($"Perimeter of {circle.Name}: {circle.Perimeter()}");
+Console.WriteLine($"Color of {circle.Name}: {circle.Color}");
+
+// This code gives an error.  Do you know why?
+// It has something to do with one of the abstract methods in the class it inherits from.
+// Can you fix the error?
+
+#!markdown
+
+Page 16
+
+#!csharp
+
+public class Calculator
+{
+    public static int AddInts(int a, int b)
+    { 
+        return a + b; 
+    }
+
+    public static int AddInts(int a, int b, int c)
+    { 
+        return a + b + c; 
+    }
+}
+
+// Call the method with two arguments
+int sum1 = Calculator.AddInts(1, 2);
+Console.WriteLine($"The sum of two arguments is {sum1}.");
+
+Console.WriteLine(); // Add a blank line
+
+// Call the method with three arguments
+int sum2 = Calculator.AddInts(1, 2, 3);
+Console.WriteLine($"The sum of three arguments is {sum2}.");
+
+// How is it possible to have two methods with the same name in the same class?
+// What is the term for the ability to have multiple methods with the same name in the same class?
+// When might you want to use this method in your code?
+
+#!markdown
+
+Page 17
+
+#!csharp
+
+public class Calculator
+{
+    public virtual int AddInts(int a, int b)
+    { 
+        return a + b; 
+    }
+
+    public virtual int AddInts(int a, int b, int c)
+    { 
+        return a + b + c; 
+    }
+}
+
+public class MyCalculator : Calculator
+{
+    public override int AddInts(int a, int b)
+    { 
+        Console.Write(a + "+" + b + "=");
+        return a + b + 1; 
+    }
+}
+
+MyCalculator mc = new MyCalculator();
+Console.WriteLine(mc.AddInts(2, 2) + " !");
+
+// What does the virtual keyword do in the Calculator class?
+// What does the override keyword do in the MyCalculator class?
+// How is virtual different from abstract? When might you use one over the other?
+
+#!markdown
+
+Page 19
+
+#!csharp
+
+public class Shape
+{
+    public int X { get; set; }
+    public int Y { get; set; }
+
+    public Shape(int _x, int _y)
+    {
+        X = _x;
+        Y = _y;
+    }
+}
+
+public class Rectangle : Shape
+{
+    public Rectangle() : base(15, 25)
+    {
+    }
+}
+
+public class Ellipse : Shape
+{
+    public Ellipse(int _x, int _y) : base(_x, _y)
+    {
+    }
+}
+
+// Create a rectangle
+Rectangle rectangle = new Rectangle();
+Console.WriteLine($"Rectangle: X={rectangle.X}, Y={rectangle.Y}");
+
+// Create an ellipse
+Ellipse ellipse = new Ellipse(10, 20);
+Console.WriteLine($"Ellipse: X={ellipse.X}, Y={ellipse.Y}");
+
+// What is the purpose of the base keyword in the Rectangle and Ellipse classes?
+// What does the base keyword do in this case?
+// How else can you use the base keyword in your code?
+// What are the benefits of using the base keyword?
+
+#!markdown
+
+Page 20
+
+#!csharp
+
+public class Cylinder_v2
+{
+    public Circle_v2 Top { get; private set; }
+    public Circle_v2 Bottom { get; private set; }
+    public double Height { get; set; }
+
+    public Cylinder_v2(double radius, double height)
+    {
+        Top = new Circle_v2(radius);
+        Bottom = new Circle_v2(radius);
+        Height = height;
+    }
+
+    public double GetArea()
+    {
+        return 2 * Top.GetArea() 
+            + Top.GetPerimeter() * Height;
+    }
+
+    public double GetVolume()
+    {
+        return Top.GetArea() * Height;
+    }
+}
+
+public class Circle_v2
+{
+    public double Radius { get; set; }
+
+    public Circle_v2(double radius)
+    {
+        Radius = radius;
+    }
+
+    public double GetArea()
+    {
+        return Math.PI * Radius * Radius;
+    }
+
+    public double GetPerimeter()
+    {
+        return 2 * Math.PI * Radius;
+    }
+}
+
+// Create a cylinder
+Cylinder_v2 cylinder = new Cylinder_v2(5, 10);
+Console.WriteLine($"Area of the cylinder: {cylinder.GetArea()}");
+Console.WriteLine($"Volume of the cylinder: {cylinder.GetVolume()}");
+
+// Giving the types and the types of methods in the code is known as early binding.
+// What might be the benefits of early binding in your code?
+
+#!markdown
+
+Page 21
+
+#!csharp
+
+dynamic object_1 = 1.23;
+dynamic object_2 = "coding";
+dynamic object_3 = 250;
+
+Console.WriteLine(object_1 + " \t type = " + object_1.GetType());
+Console.WriteLine(object_2 + " \t type = " + object_2.GetType());
+Console.WriteLine(object_3 + " \t type = " + object_3.GetType());
+
+// We can use the dynamic keyword to create variables that can store different types of data.
+// It is different from the var keyword.  How is it different?
+// What are the benefits of using the dynamic keyword in your code?
+
+#!markdown
+
+Page 22
+
+#!csharp
+
+public class Calculator
+{
+    public virtual int AddInts(int a, int b)
+    { 
+        return a + b; 
+    }
+
+    public virtual int AddInts(int a, int b, int c)
+    { 
+        return a + b + c; 
+    }
+}
+
+public class MyCalculator : Calculator
+{
+    public override int AddInts(int a, int b)
+    { 
+        // Console.Write(a + "+" + b + "=");
+        return a + b + 1; 
+    }
+}
+
+Calculator calc_1 = new Calculator();
+Console.WriteLine("parent referenced as parent, sum = " + calc_1.AddInts(1, 2));
+
+MyCalculator calc_2 = new MyCalculator();
+Console.WriteLine("child referenced as child, sum = " + calc_2.AddInts(1, 2));
+
+Calculator calc_3 = new MyCalculator();
+Console.WriteLine("child referenced as parent, sum = " + calc_3.AddInts(1, 2));
+
+// What is the purpose of the virtual keyword in the Calculator class?
+// How is it different from the abstract keyword?  What would happen if you changed virtual to abstract in the Calculator class?
+// Would it work?  Why or why not? What changes would you need to make for it to work? Does that help
+// you understand the difference between the virtual and abstract keywords and when you might use one over the other?
+
+#!markdown
+
+Page 23
+
+#!csharp
+
+public class Shape
+{
+    public int X { get; set; }
+    public int Y { get; set; }
+
+    public Shape(int _x, int _y)
+    {
+        X = _x;
+        Y = _y;
+    }
+}
+
+public class Rectangle : Shape
+{
+    public string ExtraProperty;
+    public Rectangle(int _x, int _y)
+        : base(_x, _y)
+    {
+        ExtraProperty = "Extra property";
+    }
+}
+
+public class Ellipse : Shape
+{
+    public string Color;
+    public Ellipse(int _x, int _y)
+        : base(_x, _y)
+    {
+        Color = "Red";
+    }
+}
+
+public class UsingShapes
+{
+    public static void ProcessShapes()
+    {
+        Shape s1;
+        Shape s2;
+        Shape s3;
+
+        // down-casting s1 to Ellipse
+        s1 = new Ellipse(0, 0);
+
+        // setting s2 to a shape object
+        s2 = new Shape(0, 0);
+
+        // down-casting s2 to Rectangle
+        s3 = new Rectangle(0, 0);
+
+        if (s3 is Rectangle)
+            (s3 as Rectangle).ExtraProperty = "some property";
+
+        Console.WriteLine(((Ellipse)s1).Color);
+        // Console.WriteLine(s1.Color); // Error: 'Shape' does not contain a definition for 'Color'
+    }
+}
+
+// Process the shapes
+UsingShapes.ProcessShapes();
+
+// Why are s1, s2, and s3 declared as Shape objects when they are actually Ellipse, Shape, and Rectangle objects?
+// What do the "is" and "as" keywords do in the code?  How might you use them in your code?
+// What is meant by down-casting?  How is this different from up-casting? When might you use them?
