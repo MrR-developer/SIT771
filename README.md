@@ -8,7 +8,7 @@
 
 This repository was created to help other Deakin students to learn object-oriented development. It includes all of the examples from the lecture notes for _SIT771: Object-Oriented Development_ prepared as [Polyglot Notebooks](https://code.visualstudio.com/docs/languages/polyglot). When I was studying this class I found it really helpful to experiment with `C# code` without the need to continously go back to the command line to run it. It was also very useful to have open during the lectures to try out new things to see how they worked. This gave me the confidence to ask questions in class if things didn't work as I expected and to confidently give answers to questions asked in class (because I had quickly tried out the code, run it, and now knew the answer).
 
-If you are familiar with how repositories work feel free to clone this repository to your computer. If you don't know how to do that, then just follow the instructions for Installing and Using Polyglot Notebooks that I've given below and then follow each of these links to find the Polyglot Notebook for each week of the course.
+If you are familiar with how repositories work feel free to clone this repository to your computer. If you don't know how to do that, then just follow the instructions for Installing and Using Polyglot Notebooks that I've given below and then follow each of these links to find the Polyglot Notebook for each week of the course and then click on the **Download raw file** button in GitHub.
 
 * [Week 1](notebooks/Week1.dib)
 * [Week 2](notebooks/Week2.dib)
